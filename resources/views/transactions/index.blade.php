@@ -9,12 +9,11 @@
                 <tr class="card-panel grey lighten-1 z-depth-0 transaction-title">
                     <td colspan="4" style="padding: 10px 15px;">
                         <span>{{ $transaction_per_date->transaction_date->toFormattedDateString() }}</span>
-                        {{-- TODO o que fazer com este valor ??--}}
                         <span class="right">{{ format_balance($transaction_per_date->balance) }}</span>
                     </td>
                 </tr>
-
-                @foreach(\App\Transaction::where('transaction_date', $transaction_per_date->transaction_date->toDateString())->get() as $transaction)
+                {{-- TODO agrupar por mes --}}
+                @foreach(\App\Transaction::where('transaction_date', $transaction_per_date->transaction_date->toDateString())->with('Account','Company','Category')->get() as $transaction)
                     <tr data-action="{{ action('TransactionController@edit', $transaction) }}">
                         <td>{{ $transaction->Category->prefix_name() }}{{ $transaction->Category->name }}</td>
                         <td>{{ $transaction->Company->name }}</td>
@@ -31,8 +30,8 @@
 
 @section('js')
     <script>
-        $('#TransactionTable tbody tr').click(function() {
-            //when user clicks on tr of the account table then redirect to the edit page
+        $('#TransactionTable tbody tr:not(.transaction-title)').click(function() {
+            //when user clicks on tr of the transaction table then redirect to the edit page
             window.location.href = $(this).attr('data-action')
         })
     </script>

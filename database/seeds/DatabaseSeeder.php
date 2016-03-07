@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
 
         //adds 3 accounts for testing
         factory(\App\Account::class, 3)->create();
+
+        //adds 50 transactions for testing
+        factory(\App\Transaction::class, 30)->create();
     }
 }

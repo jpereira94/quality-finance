@@ -32,3 +32,15 @@ $factory->define(\App\Company::class, function (\Faker\Generator $faker) {
        'name'   => $faker->company,
    ];
 });
+
+$factory->define(\App\Transaction::class, function(\Faker\Generator $faker) {
+   return [
+       'transaction_date'   => $faker->dateTimeBetween('-2 years')->format('Y-m-d'),
+       'payment_date'       => $faker->date(),
+       'company_id'         => rand(1, 15),
+       'category_id'        => rand(1, 51),
+       'account_id'         => rand(1, 3),
+       'is_expense'         => $faker->boolean(),
+       'amount'             => $faker->randomFloat(2, 0, 10000),
+   ];
+});
