@@ -14,7 +14,8 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('date');
+            $table->date('transaction_date');
+            $table->date('payment_date');
 
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
@@ -23,7 +24,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('account_id')->unsigned();
             $table->foreign('account_id')->references('id')->on('accounts');
 
-            $table->boolean('is_expense');
+            $table->boolean('is_expense')->default('1');
 
             $table->float('amount');
             $table->text('notes');

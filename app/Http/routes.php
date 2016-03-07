@@ -35,6 +35,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('setting/company', 'CompanyController', ['except' => 'show']);
     Route::resource('setting/category', 'CategoryController', ['except' => 'show']);
 
+    Route::resource('transaction', 'TransactionController');
 });
 
 /*Route::group(['middleware' => 'web'], function () {

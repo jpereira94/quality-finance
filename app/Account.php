@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read mixed $balance
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Transaction[] $Transactions
  */
 class Account extends Model
 {
@@ -38,7 +39,28 @@ class Account extends Model
 	 */
 	public function getBalanceAttribute($value)
 	{
-//	    return number_format($this->working_capital, 2, ',', ' ');
-		return $this->working_capital;
+		//get all the transactions for this account
+		$transactions = $this->Transactions;
+		//get the starting working capital
+		$capital = $this->working_capital;
+
+		//iterate through each transaction
+		foreach($transactions as $transaction)
+		{
+			//update the capital
+			$capital += $transaction->FormattedAmount();
+		}
+
+		//returns it
+		return $capital;
+	}
+
+	/**
+	 * Returns the transactions for the given account
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+	public function Transactions()
+	{
+		return $this->hasMany(Transaction::class);
 	}
 }

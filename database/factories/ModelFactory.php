@@ -26,3 +26,9 @@ $factory->define(\App\Account::class, function (Faker\Generator $faker) {
         'working_capital'   => $faker->randomFloat(2),
     ];
 });
+
+$factory->define(\App\Company::class, function (\Faker\Generator $faker) {
+   return [
+       'name'   => $faker->company,
+   ];
+});

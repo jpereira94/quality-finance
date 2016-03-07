@@ -133,7 +133,7 @@
 		clear: 'Limpar',
 		close: 'Fechar',
 		format: 'd !de mmmm !de yyyy',
-		formatSubmit: 'yyyy/mm/dd'
+		formatSubmit: 'yyyy-mm-dd'
 	});
 	$('.datepicker').pickadate({
 		firstDay: true,

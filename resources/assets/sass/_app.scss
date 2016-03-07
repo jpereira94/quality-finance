@@ -225,6 +225,12 @@ input[type=submit]
     cursor: pointer;
   }
 }
+#TransactionTable {
+  tbody tr:not(.transaction-title) {
+    cursor: pointer;
+  }
+}
+
 
 .navbar-fixed-top {
   position: fixed;
@@ -232,4 +238,16 @@ input[type=submit]
   z-index: 998;
   right: 0;
   padding-left: 240px;
+}
+
+.category-child {
+  padding-left: 20px;
+}
+
+.transaction-title
+{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  //padd
+  margin-bottom: 0;
 }
