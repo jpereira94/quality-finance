@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
 use App\Transaction;
+use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,7 +19,8 @@ class TransactionController extends Controller
     public function index()
     {
 
-        $transactions = Transaction::groupBy('transaction_date')->select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
+//        $transactions = Transaction::groupBy('transaction_date')select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
+        $transactions = Transaction::groupBy(DB::raw('MONTH(transaction_date), YEAR(transaction_date)'))->select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
 
         return view('transactions.index', compact('transactions'));
     }
