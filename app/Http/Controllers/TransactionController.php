@@ -22,6 +22,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
+        $user = \Auth::user();
 
 //        $transactions = Transaction::groupBy('transaction_date')select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
 //        $transactions = Transaction::groupBy(DB::raw('MONTH(transaction_date), YEAR(transaction_date)'))->select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();

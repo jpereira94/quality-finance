@@ -37,6 +37,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::resource('transaction', 'TransactionController');
     Route::post('transaction/filter', 'TransactionController@filterData');
+
+//    Route::auth();
 });
 
 /*Route::group(['middleware' => 'web'], function () {
