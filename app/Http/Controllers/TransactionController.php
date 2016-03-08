@@ -148,9 +148,6 @@ class TransactionController extends Controller
         $start = Input::get('start_date');
         $end = Input::get('end_date');
 
-
-
-
         //.....
         //validate data
         //and then store it in DB
