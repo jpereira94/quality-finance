@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
 use App\Transaction;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
+use Response;
+use Session;
 
 class TransactionController extends Controller
 {
@@ -20,7 +24,17 @@ class TransactionController extends Controller
     {
 
 //        $transactions = Transaction::groupBy('transaction_date')select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
-        $transactions = Transaction::groupBy(DB::raw('MONTH(transaction_date), YEAR(transaction_date)'))->select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
+//        $transactions = Transaction::groupBy(DB::raw('MONTH(transaction_date), YEAR(transaction_date)'))->select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
+//        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get()->groupBy(function($item){
+//            return $item->transaction_date->format('m-Y');
+//        });
+
+        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
+
+        $transactions = $transactions->whereBetween('transaction_date',['2014-4-00','2014-06-31']);
+        $transactions = $transactions->get()->groupBy(function($item){
+            return $item->transaction_date->format('m-Y');
+        });
 
         return view('transactions.index', compact('transactions'));
     }
@@ -120,5 +134,35 @@ class TransactionController extends Controller
         $transaction->delete();
         //return to the index view
         return redirect()->action('TransactionController@index');
+    }
+
+    public function filterData()
+    {
+        //check if its our form
+        if ( Session::token() !== Input::get( '_token' ) ) {
+            return Response::json( array(
+                'msg' => 'Unauthorized attempt to create setting'
+            ) );
+        }
+
+        $start = Input::get('start_date');
+        $end = Input::get('end_date');
+
+
+
+
+        //.....
+        //validate data
+        //and then store it in DB
+        //.....
+
+        $response = array(
+            'start' => $start,
+            'end' => $end,
+            'status' => 'success',
+            'msg' => 'Setting created successfully',
+        );
+
+        return \Response::json( $response );
     }
 }

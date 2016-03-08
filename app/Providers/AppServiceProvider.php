@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Account;
 use App\Category;
 use App\Company;
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+//        Carbon::setLocale('pt');
+        setlocale(LC_ALL, 'pt_PT.utf8');
         view()->composer('partials.side-nav', function($view) {
             $view->with([
                 'accounts'      => Account::all(),

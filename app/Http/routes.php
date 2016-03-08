@@ -36,6 +36,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('setting/category', 'CategoryController', ['except' => 'show']);
 
     Route::resource('transaction', 'TransactionController');
+    Route::post('transaction/filter', 'TransactionController@filterData');
 });
 
 /*Route::group(['middleware' => 'web'], function () {

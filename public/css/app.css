@@ -8764,4 +8764,7 @@ textarea.materialize-textarea.valid ~ label {
   padding-bottom: 10px;
   margin-bottom: 0; }
 
+.modal-sm {
+  width: 30%; }
+
 /*# sourceMappingURL=app.css.map */

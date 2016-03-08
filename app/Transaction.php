@@ -108,6 +108,4 @@ class Transaction extends Model
 	{
 		return $this->is_expense ? $expense_color : $revenue_color;
 	}
-
-//blue-text text-accent-2
 }
