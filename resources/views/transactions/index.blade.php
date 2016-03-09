@@ -39,7 +39,6 @@
                     <td colspan="4" style="padding: 10px 15px;">
                         <span>{{ \Carbon\Carbon::createFromFormat('m-Y', $date)->formatLocalized('%B %Y') }}</span>
                         <span class="right">{{ format_balance($transaction_grouped->sum(function ($transaction){return $transaction['amount']*pow(-1,$transaction['is_expense']);})) }}</span>
-                        {{--                        <span class="right">{{ format_balance($transaction_per_date->balance) }}</span>--}}
                     </td>
                 </tr>
 
@@ -52,21 +51,6 @@
                     </tr>
                 @endforeach
 
-                {{--<tr class="card-panel grey lighten-1 z-depth-0 transaction-title">--}}
-                {{--<td colspan="4" style="padding: 10px 15px;">--}}
-                {{--<span>{{ $transaction_per_date->transaction_date->toFormattedDateString() }}</span>--}}
-                {{--<span class="right">{{ format_balance($transaction_per_date->balance) }}</span>--}}
-                {{--</td>--}}
-                {{--</tr>--}}
-                {{-- TODO agrupar por mes --}}
-                {{--@foreach(\App\Transaction::where('transaction_date', $transaction_per_date->transaction_date->toDateString())->with('Account','Company','Category')->get() as $transaction)--}}
-                {{--<tr data-action="{{ action('TransactionController@edit', $transaction) }}">--}}
-                {{--<td>{{ $transaction->Category->prefix_name() }}{{ $transaction->Category->name }}</td>--}}
-                {{--<td>{{ $transaction->Company->name }}</td>--}}
-                {{--<td>{{ $transaction->Account->name }}</td>--}}
-                {{--<td class="right-align {{ $transaction->ColorCode() }}"> {{ format_balance($transaction->FormattedAmount()) }}</td>--}}
-                {{--</tr>--}}
-                {{--@endforeach--}}
             @endforeach
 
         </table>
@@ -81,53 +65,13 @@
             window.location.href = $(this).attr('data-action')
         });
 
+        var $dados;
+
+        moment.locale('pt')
 
         $( document ).ready( function() {
-            /*$('.update').click(function(e) {
-                e.preventDefault();
 
-                var url             = "http://clothing.app/updateProductOption";
-                var $post             = {};
-                $post.id            = $(this).attr('rel');
-                $post.size            = $('#size_' + $post.id).val();
-                $post.colour        = $('#colour_' + $post.id).val();
-                $post.stock            = $('#stock_' + $post.id).val();
-
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: $post,
-                    cache: false,
-                    success: function(data){
-                        return data;
-                    }
-                });
-                return false;
-            });
-*/
             $('#filter-data-form').on( 'submit', function() {
-
-                //.....
-                //show some spinner etc to indicate operation in progress
-                //.....
-                /*var url = $(this).prop('action');
-                var $post   = {};
-                $post.start = $('#start_date').val();
-                $post.end   = $('#end_date').val();
-
-                console.log($post);
-
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: $post,
-                    cache: false,
-                    success: function(data) {
-                        console.log(data)
-                    }
-                });*/
-
-
 
                 $.post(
                         $( this ).prop('action'),
@@ -138,6 +82,54 @@
                         },
                         function( data ) {
                             console.log(data)
+                            $dados = data;
+                            if (data['status'] == 'success')
+                            {
+                                var table = $('#TransactionTable');
+                                table.empty();
+                                var $transactions = data['transactions'];
+
+                                for (key in  $transactions)
+                                {
+	                                var date = moment(key, "MM-YYYY").format('MMMM YYYY');
+
+                                    table.append(
+                                            '<tr class="card-panel grey lighten-1 z-depth-0 transaction-title">' +
+                                                '<td colspan="4" style="padding: 10px 15px;">' +
+                                                    '<span>'+moment(key, "MM-YYYY").format('MMMM YYYY')+'' +
+                                                    '<span class="right">'+data['balances'][key]+'</span>' +
+                                                '</td>' +
+                                            '</tr>'
+                                    );
+
+	                                for($transaction in $transactions[key])
+	                                {
+		                                table.append(
+				                                '<tr data-action="{{ action('TransactionController@edit', $transaction) }}">'+
+						                                /* TODO ver se meter o getNameAttribute devolve logo o nome certo */
+				                                '<td>{{ $transaction->Category->prefix_name() }}{{ $transaction->Category->name }}</td>' +
+				                                '' +
+				                                ''
+		                                );
+		                                {{--<tr data-action="{{ action('TransactionController@edit', $transaction) }}">--}}
+			                                {{--<td>{{ $transaction->Category->prefix_name() }}{{ $transaction->Category->name }}</td>--}}
+			                                {{--<td>{{ $transaction->Company->name }}</td>--}}
+			                                {{--<td>{{ $transaction->Account->name }}</td>--}}
+			                                {{--<td class="right-align {{ $transaction->ColorCode() }}"> {{ format_balance($transaction->FormattedAmount()) }}</td>--}}
+		                                {{--</tr>--}}
+
+	                                }
+                                }
+
+//                                for(key in transactions['01-2016']) console.log(key)
+//                                Object.keys(transactions).length
+//                                for each (var $transaction in $transactions)
+//                                {
+//                                    console.log($transaction)
+//                                }
+
+                            }
+                            console.log(data['transactions'])
                             //do something with data/response returned by server
                         },
                         'json'

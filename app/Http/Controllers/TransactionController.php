@@ -22,7 +22,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $user = \Auth::user();
+
 
 //        $transactions = Transaction::groupBy('transaction_date')select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
 //        $transactions = Transaction::groupBy(DB::raw('MONTH(transaction_date), YEAR(transaction_date)'))->select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
@@ -32,7 +32,7 @@ class TransactionController extends Controller
 
         $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
 
-        $transactions = $transactions->whereBetween('transaction_date',['2014-4-00','2014-06-31']);
+//        $transactions = $transactions->whereBetween('transaction_date',['2014-4-00','2014-06-31']);
         $transactions = $transactions->get()->groupBy(function($item){
             return $item->transaction_date->format('m-Y');
         });
@@ -142,6 +142,7 @@ class TransactionController extends Controller
         //check if its our form
         if ( Session::token() !== Input::get( '_token' ) ) {
             return Response::json( array(
+                'status' => 'error',
                 'msg' => 'Unauthorized attempt to create setting'
             ) );
         }
@@ -149,17 +150,32 @@ class TransactionController extends Controller
         $start = Input::get('start_date');
         $end = Input::get('end_date');
 
-        //.....
-        //validate data
-        //and then store it in DB
-        //.....
+
+
+        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
+
+        $transactions = $transactions->whereBetween('transaction_date',[$start, $end]);
+        $transactions = $transactions->get()->groupBy(function($item){
+            return $item->transaction_date->format('m-Y');
+        });
+
+        foreach($transactions as $date => $transaction_grouped)
+        {
+            $balances[$date] = format_balance($transaction_grouped->sum(function ($transaction){return $transaction['amount']*pow(-1,$transaction['is_expense']);}));
+        }
+
+
 
         $response = array(
-            'start' => $start,
-            'end' => $end,
-            'status' => 'success',
-            'msg' => 'Setting created successfully',
+            'start'         => $start,
+            'end'           => $end,
+            'status'        => 'success',
+            'msg'           => 'Setting created successfully',
+            'transactions'  => $transactions,
+            'balances'      => $balances
         );
+
+//        dd($transactions);
 
         return \Response::json( $response );
     }
