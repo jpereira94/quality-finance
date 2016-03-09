@@ -116,18 +116,6 @@ class Transaction extends Model
 	}
 
 	/**
-	 * Returns a color codded class to indicate whether the transaction is an expense or a revenue
-	 *
-	 * @param string $expense_color
-	 * @param string $revenue_color
-	 * @return string
-     */
-	public function ColorCode($expense_color = 'blue-text text-accent-2', $revenue_color = 'green-text')
-	{
-		return $this->is_expense ? $expense_color : $revenue_color;
-	}
-
-	/**
 	 * Accessor to get the color code
 	 *
 	 * @param $value
@@ -137,7 +125,4 @@ class Transaction extends Model
 	{
 		return $this->is_expense ? 'blue-text text-accent-2' : 'green-text';
 	}
-
-
-
 }

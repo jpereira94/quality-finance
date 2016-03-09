@@ -20,3 +20,18 @@
 
     </ul>
 @endsection
+
+@if(Request::is('transaction'))
+@section('footer')
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container">
+
+                <a class="grey-text text-lighten-4 right" href="#!">
+                    <i class="material-icons">save</i>
+                </a>
+            </div>
+        </div>
+    </footer>
+@endsection
+@endif

@@ -38,10 +38,10 @@
 
                 @foreach($transaction_grouped as $transaction)
                     <tr data-action="{{ action('TransactionController@edit', $transaction) }}">
-                        <td>{{ $transaction->Category->prefix_name() }}{{ $transaction->Category->name }}</td>
+                        <td>{{ $transaction->Category->compound_name }}</td>
                         <td>{{ $transaction->Company->name }}</td>
                         <td>{{ $transaction->Account->name }}</td>
-                        <td class="right-align {{ $transaction->ColorCode() }}"> {{ format_balance($transaction->FormattedAmount()) }}</td>
+                        <td class="right-align {{ $transaction->color_code }}"> {{ format_balance($transaction->FormattedAmount()) }}</td>
                     </tr>
                 @endforeach
 

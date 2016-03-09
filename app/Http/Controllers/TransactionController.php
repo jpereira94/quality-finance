@@ -203,45 +203,15 @@ class TransactionController extends Controller
             'balances'      => $balances
         );
 
-//        dd($transactions);
-
         return \Response::json( $response );
     }
 
-    public function filterDataDebug()
+    /**
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function generatePDF()
     {
-        $start = Input::get('start_date');
-        $end = Input::get('end_date');
-
-//        dd(array($start, $end));
-
-
-        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
-
-        $transactions = $transactions->whereBetween('transaction_date',[$start, $end]);
-        $transactions = $transactions->get()->groupBy(function($item){
-            return $item->transaction_date->format('m-Y');
-        });
-
-        foreach($transactions as $date => $transaction_grouped)
-        {
-            $balances[$date] = format_balance($transaction_grouped->sum(function ($transaction){return $transaction['amount']*pow(-1,$transaction['is_expense']);}));
-        }
-
-
-//        dd($transactions);
-
-        $response = array(
-            'start'         => $start,
-            'end'           => $end,
-            'status'        => 'success',
-            'msg'           => 'Setting created successfully',
-            'transactions'  => $transactions,
-            'balances'      => $balances
-        );
-
-//        dd($transactions);
-
-        return \Response::json( $response );
+        return \PDF::loadView('transactions.transactions')->stream();
     }
 }

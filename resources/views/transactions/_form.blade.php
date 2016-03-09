@@ -37,11 +37,10 @@
                 <optgroup label="{{ $category->name }}">
                     <option value="{{ $category->id }}" @if(Form::getValueAttribute('category_id') == $category->id) selected="selected" @endif>{{ $category->name }}</option>
                     @foreach($category->Child as $category_child)
-                        <option value="{{ $category_child->id }}" @if(Form::getValueAttribute('category_id') == $category_child->id) selected="selected" @endif>{{ $category_child->prefix_name() }}{{ $category_child->name }}</option>
+                        <option value="{{ $category_child->id }}" @if(Form::getValueAttribute('category_id') == $category_child->id) selected="selected" @endif>{{ $category_child->compound_name }}</option>
                     @endforeach
                 </optgroup>
             @endforeach
-
         </select>
         {!! Form::label('category_id', 'Categoria') !!}
     </div>
@@ -53,7 +52,7 @@
         <div class="switch">
             <label>
                 Despesa
-                <input type="checkbox" name="is_expense" value="0" @if(Form::getValueAttribute('is_expense') == 0) checked="checked" @endif>
+                <input type="checkbox" name="is_expense" value="0" @if(Form::getValueAttribute('is_expense') === 0) checked="checked" @endif>
                 <span class="lever"></span>
                 Receita
             </label>

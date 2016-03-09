@@ -1,5 +1,57 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+// Print utilities
+//
+// Media queries are placed on the inside to be mixin-friendly.
+
+.visible-print {
+  display: none !important;
+}
+@media print {
+  .visible-print {
+    display: block !important;
+  }
+  table.visible-print {
+    display: table !important;
+  }
+  tr.visible-print {
+    display: table-row !important;
+  }
+  th.visible-print,
+  td.visible-print {
+    display: table-cell !important;
+  }
+}
+.visible-print-block {
+  display: none !important;
+}
+@media print {
+  .visible-print-block {
+    display: block !important;
+  }
+}
+.visible-print-inline {
+  display: none !important;
+}
+@media print {
+  .visible-print-inline {
+    display: inline !important;
+  }
+}
+.visible-print-inline-block {
+  display: none !important;
+}
+@media print {
+  .visible-print-inline-block {
+    display: inline-block !important;
+  }
+}
+@media print {
+  .hidden-print {
+    display: none !important;
+  }
+}
+
 //  Place here your app code
 
 html,
@@ -14,8 +66,10 @@ body {
 
 $top-nav-height: 80px;
 
+$side-nav-width: 240px;
+
 .side-nav {
-  width: 240px;
+  width: $side-nav-width;
   padding-bottom: 0;
   position: relative;
 
@@ -58,7 +112,7 @@ $top-nav-height: 80px;
       left: 0;
       right: 0;
 
-      margin-bottom: 15px !important;
+      //margin-bottom: 15px !important;
       li {
         background-color: lighten($sidenav-bg-color, 7);
 
@@ -91,10 +145,10 @@ $top-nav-height: 80px;
           background-color: $sidenav-bg-color;
           font-size: 1.125rem;
           color: white;
+          height: 50px;
+          line-height: 48px;
         }
       }
-
-
     }
   }
   .collapsible .collapsible-header {
@@ -122,7 +176,7 @@ $top-nav-height: 80px;
 }
 
 main {
-  padding-left: 240px;
+  padding-left: $side-nav-width;
   padding-top: $top-nav-height;
 }
 
@@ -237,7 +291,7 @@ input[type=submit]
   top: 0;
   z-index: 998;
   right: 0;
-  padding-left: 240px;
+  padding-left: $side-nav-width;
 }
 
 .category-child {
@@ -255,3 +309,26 @@ input[type=submit]
 .modal-sm {
   width: 30%;
 }
+
+.page-footer {
+  padding-top: 0 !important;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  .footer-copyright {
+    padding-left: $side-nav-width;
+
+  }
+
+  a.right {
+    i {
+      height: 50px;
+      line-height: 50px;
+    }
+  }
+
+}
+
+

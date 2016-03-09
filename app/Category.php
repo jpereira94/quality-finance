@@ -89,15 +89,6 @@ class Category extends Model
 	/**
 	 * Generates a prefix name to get the parent category name
 	 * @return null|string
-     */
-	public function prefix_name()
-	{
-		return !$this->is_parent() ? $this->Parent()->name . ' : ' : null;
-	}
-
-	/**
-	 * Generates a prefix name to get the parent category name
-	 * @return null|string
 	 */
 	public function getCompoundNameAttribute($value)
 	{

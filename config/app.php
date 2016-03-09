@@ -160,6 +160,7 @@ return [
         Illuminate\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         browner12\helpers\HelperServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
 //        /*/*
 //         * PHPStorm IDE-helper
@@ -237,6 +238,7 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
+        'PDF'       => Barryvdh\DomPDF\Facade::class,
 
 //        'Form'      => Illuminate\Html\FormFacade::class,
 //        'Html'      => Illuminate\Html\HtmlFacade::class,

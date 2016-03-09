@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'companies'     => Company::lists('name','id'),
                 'accounts'      => Account::lists('name', 'id'),
-                'categories'     => Category::Parents()
+                'categories'    => Category::Parents()
             ]);
         });
     }
