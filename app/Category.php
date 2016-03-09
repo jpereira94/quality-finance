@@ -94,4 +94,28 @@ class Category extends Model
 	{
 		return !$this->is_parent() ? $this->Parent()->name . ' : ' : null;
 	}
+
+	/**
+	 * Generates a prefix name to get the parent category name
+	 * @return null|string
+	 */
+	public function getCompoundNameAttribute($value)
+	{
+		if($this->is_parent())
+			return $this->name;
+		else
+			return $this->Parent()->name. ' : '. $this->name;
+	}
+
+	/**
+	 * Convert the model instance to an array.
+	 *
+	 * @return array
+	 */
+	public function toArray()
+	{
+		$array = parent::toArray();
+		$array['compound_name'] = $this->compound_name;
+		return $array;
+	}
 }

@@ -3,15 +3,12 @@
 @section('content')
     <div class="container">
 
-        <!-- Modal Trigger -->
-        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
         <!-- Modal Structure -->
         <div id="filter-modal" class="modal modal-sm">
+            {!! Form::open(['id' => 'filter-data-form', 'url' => action('TransactionController@filterData')]) !!}
             <div class="modal-content">
-                <h4>Filtrar</h4>
-                {!! Form::open(['id' => 'filter-data-form', 'url' => action('TransactionController@filterData')]) !!}
-                {{--<form id="filter-data-form" action="{{ action('TransactionController@filterData') }}">--}}
+                <h4>Filtrar transações </h4>
+                <p></p>
                     <div class="row">
                         <div class="input-field col s12">
                             {!! Form::text('start_date', null, ['placeholder' => 'AAAA-MM-DD', 'id' => 'start_date']) !!}
@@ -22,18 +19,15 @@
                             {!! Form::label('end_date', 'Data fim') !!}
                         </div>
                     </div>
-
-                {!! Form::submit() !!}
-                {{--</form>--}}
-                {!! Form::close() !!}
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                {!! Form::submit('Filtrar', ['class' => 'modal-action modal-close waves-effect waves-green btn-flat']) !!}
+                {{--<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>--}}
             </div>
+            {!! Form::close() !!}
         </div>
 
         <table style="margin-top: 7px" id="TransactionTable" class="highlight">
-
             @foreach($transactions as $date => $transaction_grouped)
                 <tr class="card-panel grey lighten-1 z-depth-0 transaction-title">
                     <td colspan="4" style="padding: 10px 15px;">
@@ -65,34 +59,118 @@
             window.location.href = $(this).attr('data-action')
         });
 
-        var $dados;
+        //variable for debugging
+//        var $dados;
 
-        moment.locale('pt')
+        //sets the locale to print dates correctly formatted
+        moment.locale('pt');
 
         $( document ).ready( function() {
 
             $('#filter-data-form').on( 'submit', function() {
+                console.log('hello');
+                //start the ajax request
+                $.ajax({
+                    type: 'POST',
+                    url: $( this ).prop('action'),
+                    data: {
+                        //gets the necessary variables
+                        "_token": $( this ).find( 'input[name=_token]' ).val(),
+                        "start_date": $('#start_date').val(),
+                        "end_date": $('#end_date').val()
+                    },
+                    success: function( data ) {
+                        //variable for debugging
+                        //$dados = data;
 
-                $.post(
+                        // only execute this if the request was successful
+                        if (data['status'] == 'success')
+                        {
+                            //holds the table name
+                            var table = $('#TransactionTable');
+                            //holds the transactions for the filtering
+                            var $transactions = data['transactions'];
+                            //str that holds the new edit-action
+                            var edit_action = '{{ action('TransactionController@edit', '000') }}';
+
+                            //emptys the tables
+                            table.empty();
+
+                            //iterates through the transaction
+                            //var key holds the date component of the transaction group
+                            for (key in  $transactions)
+                            {
+                                //moment library similar to Carbon to format the date
+                                var date = moment(key, "MM-YYYY").format('MMMM YYYY');
+
+                                //append the 'header' per group
+                                table.append(
+                                        '<tr class="card-panel grey lighten-1 z-depth-0 transaction-title">' +
+                                        '<td colspan="4" style="padding: 10px 15px;">' +
+                                        '<span>'+moment(key, "MM-YYYY").format('MMMM YYYY')+'' +
+                                        '<span class="right">'+data['balances'][key]+'</span>' +
+                                        '</td>' +
+                                        '</tr>'
+                                );
+
+                                //iterate thorough each group of the transactions
+                                for($transaction in $transactions[key])
+                                {
+                                    table.append(
+                                            '<tr onclick="window.location.href = \''+edit_action.replace('000',$transactions[key][$transaction]['id']) +'\'">' +
+                                            '<td>'+$transactions[key][$transaction]['category']['compound_name']+'</td>' +
+                                            '<td>'+$transactions[key][$transaction]['company']['name']+'</td>' +
+                                            '<td>'+$transactions[key][$transaction]['account']['name']+'</td>' +
+                                            '<td class="right-align '+$transactions[key][$transaction]['color_code']+'">'+$transactions[key][$transaction]['formatted_amount']+'</td>' +
+                                            '</tr>'
+                                    );
+                                }
+                            }
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        //holds the table name
+                        var table = $('#TransactionTable');
+                        //emptys the tables
+                        table.empty();
+
+                        table.append('<tr class="red white-text"><td  style="padding: 10px 15px; line-height: 30px"><i class="fa fa-exclamation-triangle right fa-2x"></i> An error occurred: <b>'+xhr.responseJSON.errors+'</b></td></tr>')
+                    },
+                    dataType: 'json'
+                });
+                /*$.post(
                         $( this ).prop('action'),
                         {
+                            //gets the necessary variables
                             "_token": $( this ).find( 'input[name=_token]' ).val(),
                             "start_date": $('#start_date').val(),
                             "end_date": $('#end_date').val()
                         },
                         function( data ) {
-                            console.log(data)
-                            $dados = data;
+                            //variable for debugging
+                            //$dados = data;
+
+                            // only execute this if the request was successful
                             if (data['status'] == 'success')
                             {
+                                //holds the table name
                                 var table = $('#TransactionTable');
-                                table.empty();
+                                //holds the transactions for the filtering
                                 var $transactions = data['transactions'];
+                                //str that holds the new edit-action
+                                var edit_action = '{{ action('TransactionController@edit', '000') }}';
 
+                                //emptys the tables
+                                table.empty();
+
+                                //iterates through the transaction
+                                //var key holds the date component of the transaction group
                                 for (key in  $transactions)
                                 {
+                                    //moment library similar to Carbon to format the date
 	                                var date = moment(key, "MM-YYYY").format('MMMM YYYY');
 
+                                    //append the 'header' per group
                                     table.append(
                                             '<tr class="card-panel grey lighten-1 z-depth-0 transaction-title">' +
                                                 '<td colspan="4" style="padding: 10px 15px;">' +
@@ -102,44 +180,24 @@
                                             '</tr>'
                                     );
 
+                                    //iterate thorough each group of the transactions
 	                                for($transaction in $transactions[key])
 	                                {
 		                                table.append(
-				                                '<tr data-action="{{ action('TransactionController@edit', $transaction) }}">'+
-						                                /* TODO ver se meter o getNameAttribute devolve logo o nome certo */
-				                                '<td>{{ $transaction->Category->prefix_name() }}{{ $transaction->Category->name }}</td>' +
-				                                '' +
-				                                ''
+                                                '<tr onclick="window.location.href = \''+edit_action.replace('000',$transactions[key][$transaction]['id']) +'\'">' +
+                                                '<td>'+$transactions[key][$transaction]['category']['compound_name']+'</td>' +
+                                                '<td>'+$transactions[key][$transaction]['company']['name']+'</td>' +
+                                                '<td>'+$transactions[key][$transaction]['account']['name']+'</td>' +
+				                                '<td class="right-align '+$transactions[key][$transaction]['color_code']+'">'+$transactions[key][$transaction]['formatted_amount']+'</td>' +
+				                                '</tr>'
 		                                );
-		                                {{--<tr data-action="{{ action('TransactionController@edit', $transaction) }}">--}}
-			                                {{--<td>{{ $transaction->Category->prefix_name() }}{{ $transaction->Category->name }}</td>--}}
-			                                {{--<td>{{ $transaction->Company->name }}</td>--}}
-			                                {{--<td>{{ $transaction->Account->name }}</td>--}}
-			                                {{--<td class="right-align {{ $transaction->ColorCode() }}"> {{ format_balance($transaction->FormattedAmount()) }}</td>--}}
-		                                {{--</tr>--}}
-
 	                                }
                                 }
-
-//                                for(key in transactions['01-2016']) console.log(key)
-//                                Object.keys(transactions).length
-//                                for each (var $transaction in $transactions)
-//                                {
-//                                    console.log($transaction)
-//                                }
-
                             }
-                            console.log(data['transactions'])
-                            //do something with data/response returned by server
                         },
                         'json'
-                );
+                );*/
 
-                //.....
-                //do anything else you might want to do
-                //.....
-
-                //prevent the form from actually submitting in browser
                 return false;
             } );
 

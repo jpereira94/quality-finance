@@ -137,8 +137,14 @@ class TransactionController extends Controller
         return redirect()->action('TransactionController@index');
     }
 
+    /**
+     * Gets the filtered transactions for ajax request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function filterData()
     {
+//        dd('hello');
         //check if its our form
         if ( Session::token() !== Input::get( '_token' ) ) {
             return Response::json( array(
@@ -150,6 +156,64 @@ class TransactionController extends Controller
         $start = Input::get('start_date');
         $end = Input::get('end_date');
 
+        $start = strtotime($start);
+        $end = strtotime($end);
+
+        //validates the dates
+        if($start == false || $end == false)
+        {
+            return Response::json(array(
+                'success' => false,
+                'errors'  => 'Invalid date set!',
+            ), 400);
+        }
+
+        //switch the dates if they were put in reverse order
+        if ($start > $end)
+        {
+            $temp = $start;
+            $start = $end;
+            $end = $temp;
+        }
+
+        //instanciates a carbon for start and end
+        $start = Carbon::createFromTimestamp($start);
+        $end = Carbon::createFromTimestamp($end);
+
+
+        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
+
+        $transactions = $transactions->whereBetween('transaction_date',[$start->toDateString(), $end->toDateString()]);
+        $transactions = $transactions->get()->groupBy(function($item){
+            return $item->transaction_date->format('m-Y');
+        });
+
+        foreach($transactions as $date => $transaction_grouped)
+        {
+            $balances[$date] = format_balance($transaction_grouped->sum(function ($transaction){return $transaction['amount']*pow(-1,$transaction['is_expense']);}));
+        }
+
+
+        $response = array(
+            'start'         => $start,
+            'end'           => $end,
+            'status'        => 'success',
+            'msg'           => 'Data filtered correctly',
+            'transactions'  => $transactions,
+            'balances'      => $balances
+        );
+
+//        dd($transactions);
+
+        return \Response::json( $response );
+    }
+
+    public function filterDataDebug()
+    {
+        $start = Input::get('start_date');
+        $end = Input::get('end_date');
+
+//        dd(array($start, $end));
 
 
         $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
@@ -165,6 +229,7 @@ class TransactionController extends Controller
         }
 
 
+//        dd($transactions);
 
         $response = array(
             'start'         => $start,

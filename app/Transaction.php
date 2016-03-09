@@ -79,6 +79,19 @@ class Transaction extends Model
 	}
 
 	/**
+	 * Convert the model instance to an array.
+	 *
+	 * @return array
+	 */
+	public function toArray()
+	{
+		$array = parent::toArray();
+		$array['color_code'] = $this->color_code;
+		$array['formatted_amount'] = $this->FormattedAmount(true);
+		return $array;
+	}
+
+	/**
 	 * Formats the transaction_date field to be according to carbon standards
 	 * @param $value
      */
@@ -92,9 +105,14 @@ class Transaction extends Model
 	 * Returns a formatted amount, i.e. if is expense then return a negative amount, otherwise return a positive number
 	 * @return float
      */
-	public function FormattedAmount()
+	public function FormattedAmount($str = false)
 	{
-		return $this->is_expense ? $this->amount * -1 : $this->amount;
+		$amount = $this->is_expense ? $this->amount * -1 : $this->amount;
+		if(!$str) {
+			return $amount;
+		}
+		else
+			return format_balance($amount);
 	}
 
 	/**
@@ -108,4 +126,18 @@ class Transaction extends Model
 	{
 		return $this->is_expense ? $expense_color : $revenue_color;
 	}
+
+	/**
+	 * Accessor to get the color code
+	 *
+	 * @param $value
+	 * @return string
+     */
+	public function getColorCodeAttribute($value)
+	{
+		return $this->is_expense ? 'blue-text text-accent-2' : 'green-text';
+	}
+
+
+
 }

@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
 
 //        Carbon::setLocale('pt');
         setlocale(LC_ALL, 'pt_PT.utf8');
+
         view()->composer('partials.side-nav', function($view) {
             $view->with([
                 'accounts'      => Account::all(),
@@ -27,7 +28,6 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
         view()->composer('settings.categories._form', function($view) {
-
             $view->with([
                 'categories'     => Category::Parents()->lists('name', 'id')
             ]) ;
