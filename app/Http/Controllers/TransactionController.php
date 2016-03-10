@@ -212,6 +212,12 @@ class TransactionController extends Controller
      */
     public function generatePDF()
     {
-        return \PDF::loadView('transactions.transactions')->stream();
+
+        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get();
+
+//        dd($transactions);
+
+//        return view('transactions.transactions', compact('transactions'));
+        return \PDF::loadView('transactions.transactions', compact('transactions'))->inline();
     }
 }

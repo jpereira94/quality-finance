@@ -29,7 +29,7 @@
 
         <table style="margin-top: 7px" id="TransactionTable" class="highlight">
             @foreach($transactions as $date => $transaction_grouped)
-                <tr class="card-panel grey lighten-1 z-depth-0 transaction-title">
+                <tr class="card-panel transaction-title">
                     <td colspan="4" style="padding: 10px 15px;">
                         <span>{{ \Carbon\Carbon::createFromFormat('m-Y', $date)->formatLocalized('%B %Y') }}</span>
                         <span class="right">{{ format_balance($transaction_grouped->sum(function ($transaction){return $transaction['amount']*pow(-1,$transaction['is_expense']);})) }}</span>
@@ -105,7 +105,7 @@
 
                                 //append the 'header' per group
                                 table.append(
-                                        '<tr class="card-panel grey lighten-1 z-depth-0 transaction-title">' +
+                                        '<tr class="card-panel transaction-title">' +
                                         '<td colspan="4" style="padding: 10px 15px;">' +
                                         '<span>'+moment(key, "MM-YYYY").format('MMMM YYYY')+'' +
                                         '<span class="right">'+data['balances'][key]+'</span>' +

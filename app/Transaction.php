@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Account $Account
  * @property-read \App\Company $Company
  * @property-read \App\Category $Category
+ * @property-read mixed $color_code
  */
 class Transaction extends Model
 {

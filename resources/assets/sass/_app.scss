@@ -79,12 +79,14 @@ $side-nav-width: 240px;
     &.nav-menu {
       li {
         a {
-          @extend .grey-text;
+          //@extend .grey-text;
+          color: rgba(255,255,255,0.45);
+          @include transition(all 0.2s ease-in-out 0s);
         }
         &:hover, &:active {
           background-color: inherit;
           a {
-            color: #EEE !important;
+            color: #FFF;
           }
         }
         &.active {
@@ -114,7 +116,7 @@ $side-nav-width: 240px;
 
       //margin-bottom: 15px !important;
       li {
-        background-color: lighten($sidenav-bg-color, 7);
+        background-color: lighten($sidenav-bg-color, 8);
 
         a {
           color: white !important;
@@ -133,6 +135,9 @@ $side-nav-width: 240px;
           background-color: $sidenav-bg-color;
           @extend .flow-text;
           color: white;
+
+          line-height: 50px;
+          height: 50px;
 
           /*&:hover {
             background-color: inherit;
@@ -300,6 +305,7 @@ input[type=submit]
 
 .transaction-title
 {
+  @extend .blue-grey, .darken-1, .white-text, .z-depth-0;
   padding-top: 10px;
   padding-bottom: 10px;
   //padd
@@ -326,6 +332,22 @@ input[type=submit]
     i {
       height: 50px;
       line-height: 50px;
+    }
+  }
+
+}
+
+.pdf {
+  td, th{
+    padding: 5px 5px;
+
+  }
+
+  &.bordered > thead > tr,
+  &.bordered > tbody > tr {
+    border-bottom: 1px solid $table-border-color;
+    > td, > th {
+      border: 1px solid $table-border-color;
     }
   }
 
