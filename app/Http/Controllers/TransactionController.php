@@ -22,22 +22,23 @@ class TransactionController extends Controller
      */
     public function index()
     {
+        $collection = Transaction::orderBy('transaction_date')->select('transaction_date')->get();
+
+        $dates = [
+            'first' => $collection->first()->transaction_date->toDateString(),
+            'last'  => $collection->last()->transaction_date->toDateString(),
+        ];
+
+//        dd($dates);
 
 
-//        $transactions = Transaction::groupBy('transaction_date')select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
-//        $transactions = Transaction::groupBy(DB::raw('MONTH(transaction_date), YEAR(transaction_date)'))->select(\DB::raw('transaction_date, SUM(amount*POWER(-1,is_expense)) as balance'))->get();
-//        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get()->groupBy(function($item){
+//        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
+//
+//        $transactions = $transactions->get()->groupBy(function($item){
 //            return $item->transaction_date->format('m-Y');
 //        });
 
-        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category');
-
-//        $transactions = $transactions->whereBetween('transaction_date',['2014-4-00','2014-06-31']);
-        $transactions = $transactions->get()->groupBy(function($item){
-            return $item->transaction_date->format('m-Y');
-        });
-
-        return view('transactions.index', compact('transactions'));
+        return view('transactions.index', compact('dates'));
     }
 
     /**
@@ -80,7 +81,7 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-
+        dd('update');
     }
 
     /**
@@ -105,6 +106,7 @@ class TransactionController extends Controller
      */
     public function update(TransactionRequest $request, Transaction $transaction)
     {
+        dd('update');
         //gets all the inputs
         $inputs = $request->all();
         //add ths correctly formatted date to the correct name...
@@ -146,12 +148,16 @@ class TransactionController extends Controller
     {
 //        dd('hello');
         //check if its our form
-        if ( Session::token() !== Input::get( '_token' ) ) {
-            return Response::json( array(
-                'status' => 'error',
-                'msg' => 'Unauthorized attempt to create setting'
-            ) );
-        }
+//        if ( Session::token() !== Input::get( '_token' ) ) {
+//            return Response::json(array(
+//                'success' => false,
+//                'errors'  => 'Unauthorized attempt to filter data!',
+//            ), 400);
+//            return Response::json( array(
+//                'status' => 'error',
+//                'msg' => 'Unauthorized attempt to create setting'
+//            ) );
+//        }
 
         $start = Input::get('start_date');
         $end = Input::get('end_date');
@@ -210,14 +216,14 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function generatePDF()
-    {
-
-        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get();
-
-//        dd($transactions);
-
-//        return view('transactions.transactions', compact('transactions'));
-        return \PDF::loadView('transactions.transactions', compact('transactions'))->inline();
-    }
+//    public function generatePDF()
+//    {
+//
+//        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get();
+//
+////        dd($transactions);
+//
+////        return view('transactions.transactions', compact('transactions'));
+//        return \PDF::loadView('transactions.transactions', compact('transactions'))->inline();
+//    }
 }
