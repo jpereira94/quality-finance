@@ -1,6 +1,10 @@
 
 <div class="row">
-	<div class="input-field col s12">
+	<div class="input-field col s4">
+		{!! Form::text('taxpayer_number') !!}
+		{!! Form::label('taxpayer_number', 'NIF Entidade') !!}
+	</div>
+	<div class="input-field col s8">
 		{!! Form::text('name', null) !!}
 		{!! Form::label('name', 'Nome') !!}
 	</div>

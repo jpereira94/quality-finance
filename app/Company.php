@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property integer $id
  * @property string $name
+ * @property string $taxpayer_number
  * @property string $color
  * @property string $notes
  * @property \Carbon\Carbon $created_at
@@ -24,6 +25,7 @@ class Company extends Model
 	protected $fillable = [
 		'name',
 		'color',
-		'notes'
+		'notes',
+		'taxpayer_number',
 	];
 }

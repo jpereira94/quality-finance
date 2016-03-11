@@ -96,12 +96,9 @@
                     //variable for debugging
                     //$dados = data;
 
-
-
                     // only execute this if the request was successful
                     if (data['status'] == 'success')
                     {
-
                         //holds the transactions for the filtering
                         var $transactions = data['transactions'];
                         //str that holds the new edit-action

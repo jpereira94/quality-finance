@@ -15,7 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $category_id
  * @property integer $account_id
  * @property boolean $is_expense
+ * @property string $invoice_number
  * @property float $amount
+ * @property float $tax
  * @property string $notes
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -40,6 +42,8 @@ class Transaction extends Model
 		'is_expense',
 		'amount',
 		'notes',
+		'invoice_number',
+		'tax',
 	];
 
 	/**
@@ -99,8 +103,30 @@ class Transaction extends Model
 	public function setTransactionDateAttribute($value)
 	{
 		$this->attributes['transaction_date'] = Carbon::createFromFormat('Y-m-d', $value);
-		$this->attributes['payment_date'] = Carbon::createFromFormat('Y-m-d', $value);
 	}
+
+//	public function getTransactionDateAttribute($date)
+//	{
+//	    return $date;
+//	}
+
+	/**
+	 * Formats the payment_date field to be according ot carbon standards
+	 * @param $value
+	 */
+	public function setPaymentDateAttribute($value)
+	{
+	    $this->attributes['payment_date'] = Carbon::createFromFormat('Y-m-d', $value);
+	}
+
+	/**
+	 * @param $date
+	 * @return mixed
+	 */
+//	public function getPaymentDateAttribute($date)
+//	{
+//		return $date;
+//	}
 
 	/**
 	 * Returns a formatted amount, i.e. if is expense then return a negative amount, otherwise return a positive number

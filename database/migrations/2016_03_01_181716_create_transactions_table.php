@@ -26,7 +26,11 @@ class CreateTransactionsTable extends Migration
 
             $table->boolean('is_expense')->default('1');
 
+            $table->string('invoice_number')->nullable();
+
             $table->float('amount');
+            $table->float('tax');
+
             $table->text('notes');
 
             $table->timestamps();

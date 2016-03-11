@@ -59,12 +59,15 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request)
     {
+//        dd($request->all());
         //gets all the inputs
         $inputs = $request->all();
         //add ths correctly formatted date to the correct name...
         $inputs['transaction_date'] = $inputs['transaction_date_submit'];
+        $inputs['payment_date'] = $inputs['payment_date_submit'];
         //and unset the unnecessary name
         unset($inputs['transaction_date_submit']);
+        unset($inputs['payment_date_submit']);
 
         //finally, add the account to the database
         Transaction::create($inputs);
@@ -106,13 +109,15 @@ class TransactionController extends Controller
      */
     public function update(TransactionRequest $request, Transaction $transaction)
     {
-        dd('update');
         //gets all the inputs
         $inputs = $request->all();
         //add ths correctly formatted date to the correct name...
         $inputs['transaction_date'] = $inputs['transaction_date_submit'];
+        $inputs['payment_date'] = $inputs['payment_date_submit'];
         //and unset the unnecessary name
         unset($inputs['transaction_date_submit']);
+        unset($inputs['payment_date_submit']);
+
 
         //if the is_expense checkbox is unchecked then add it to the inputs field
         if(!isset($inputs['is_expense']))

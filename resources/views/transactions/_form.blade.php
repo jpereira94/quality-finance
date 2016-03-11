@@ -1,21 +1,40 @@
 <div class="row">
+    <div class="input-field col s4">
+        {!! Form::text('invoice_number', null) !!}
+        {!! Form::label('invoice_number', 'Número da fatura') !!}
+    </div>
+
+
+    <div class="input-field col s4">
+        <?php
+            $attr['class'] = 'datepicker';
+            if (Form::getValueAttribute('transaction_date') != '')
+                $attr['data-value'] = Form::getValueAttribute('transaction_date')->toDateString();
+        ?>
+        {!! Form::input('date', 'transaction_date', null, $attr) !!}
+        {!! Form::label('transaction_date', 'Data Emissão', ['class' => 'active']) !!}
+    </div>
+
+    <div class="input-field col s4">
+        <?php
+            unset($attr);
+        $attr['class'] = 'datepicker';
+        if (Form::getValueAttribute('payment_date') != '')
+            $attr['data-value'] = Form::getValueAttribute('payment_date')->toDateString();
+        ?>
+        {!! Form::input('date', 'payment_date', null, $attr) !!}
+        {!! Form::label('payment_date', 'Data Pagamento', ['class' => 'active']) !!}
+    </div>
+
     <div class="input-field col s6">
             <select name="company_id" id="company_id">
                 <option value=""></option>
-
                 @foreach($companies as $company_id => $company)
                     <option value="{{ $company_id }}" @if(Form::getValueAttribute('company_id') == $company_id) selected="selected" @endif >{{ $company }}</option>
                 @endforeach
-
             </select>
             {!! Form::label('company_id', 'Entidade') !!}
     </div>
-
-    <div class="input-field col s6">
-        {!! Form::input('date', 'transaction_date', null, ['class' => 'datepicker', 'data-value' => date('Y-m-d')]) !!}
-        {!! Form::label('transaction_date', 'Data', ['class' => 'active']) !!}
-    </div>
-
 
     <div class="input-field col s6">
         <select name="account_id" id="account_id">
@@ -44,11 +63,18 @@
         </select>
         {!! Form::label('category_id', 'Categoria') !!}
     </div>
+
+    </div>
+<div class="row">
     <div class="input-field col s4">
         {!! Form::text('amount', null) !!}
         {!! Form::label('amount', 'Quantia (€)') !!}
     </div>
-    <div class="input-field col s8">
+    <div class="input-field col s4">
+        {!! Form::text('tax', null) !!}
+        {!! Form::label('tax', 'Imposto (€)') !!}
+    </div>
+    <div class="input-field col s4">
         <div class="switch">
             <label>
                 Despesa
