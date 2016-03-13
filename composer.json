@@ -13,7 +13,8 @@
         "doctrine/dbal": "^2.5",
         "browner12/helpers": "^1.0",
         "barryvdh/laravel-dompdf": "^0.6.1",
-        "barryvdh/laravel-snappy": "^0.3.0"
+        "barryvdh/laravel-snappy": "^0.3.0",
+        "khill/lavacharts": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

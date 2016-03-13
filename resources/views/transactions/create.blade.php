@@ -6,7 +6,7 @@
         @include('partials.errors')
         {!! Form::open(['url' => action('TransactionController@store')]) !!}
         @include('transactions._form')
-        {!! Form::submit('Criar', ['class' => 'btn waves-effect waves-light cyan']) !!}
+        {!! Form::submit('Criar', ['class' => 'light-blue accent-4 btn-large']) !!}
         {!! Form::close() !!}
     </div>
 @endsection

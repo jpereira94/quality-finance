@@ -4,7 +4,6 @@
         {!! Form::label('invoice_number', 'Número da fatura') !!}
     </div>
 
-
     <div class="input-field col s4">
         <?php
             $attr['class'] = 'datepicker';
@@ -25,8 +24,14 @@
         {!! Form::input('date', 'payment_date', null, $attr) !!}
         {!! Form::label('payment_date', 'Data Pagamento', ['class' => 'active']) !!}
     </div>
+</div>
 
-    <div class="input-field col s6">
+<div class="row">
+    <div class="input-field col s3"  onclick="Materialize.toast('Pesquisa por NIF ainda não foi implementado.', 4000)">
+        {!! Form::text('taxpayer_number', null, ['disabled']) !!}
+        {!! Form::label('taxpayer_number', 'NIF Entidade') !!}
+    </div>
+    <div class="input-field col s5">
             <select name="company_id" id="company_id">
                 <option value=""></option>
                 @foreach($companies as $company_id => $company)
@@ -36,7 +41,7 @@
             {!! Form::label('company_id', 'Entidade') !!}
     </div>
 
-    <div class="input-field col s6">
+    <div class="input-field col s4">
         <select name="account_id" id="account_id">
             <option value=""></option>
 
@@ -48,7 +53,9 @@
         {!! Form::label('account_id', 'Conta') !!}
     </div>
 
-    <div class="input-field col s6">
+    </div>
+<div class="row">
+    <div class="input-field col s4">
         <select name="category_id" id="category_id">
             <option value=""></option>
 
@@ -64,23 +71,22 @@
         {!! Form::label('category_id', 'Categoria') !!}
     </div>
 
-    </div>
-<div class="row">
-    <div class="input-field col s4">
+    <div class="input-field col s3">
         {!! Form::text('amount', null) !!}
         {!! Form::label('amount', 'Quantia (€)') !!}
     </div>
-    <div class="input-field col s4">
+    <div class="input-field col s3">
         {!! Form::text('tax', null) !!}
         {!! Form::label('tax', 'Imposto (€)') !!}
     </div>
-    <div class="input-field col s4">
+    <div class="input-field col s2">
         <div class="switch">
             <label>
-                Despesa
-                <input type="checkbox" name="is_expense" value="0" @if(Form::getValueAttribute('is_expense') === 0) checked="checked" @endif>
-                <span class="lever"></span>
                 Receita
+                {!! Form::checkbox('is_expense', '1', null) !!}
+                {{--<input type="checkbox" name="is_expense" value="0" @if(Form::getValueAttribute('is_expense') === 0) checked="checked" @endif>--}}
+                <span class="lever"></span>
+                Despesa
             </label>
         </div>
     </div>

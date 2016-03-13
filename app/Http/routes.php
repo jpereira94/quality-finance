@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,13 @@ Route::group(['middleware' => ['web']], function () {
 //    Route::controller('settings', 'Con')
 //    Route::resource('settings', 'ConfigurationController', ['only' => 'index']);
 
-    Route::get('setting', 'ConfigurationController@index');
+    /*Route::get('/', function () {
+
+
+    });*/
+    Route::get('/', 'GlobalViewController@index');
+
+//    Route::get('setting', 'ConfigurationController@index');
     Route::resource('setting/account', 'AccountController', ['except' => 'show']);
     Route::resource('setting/company', 'CompanyController', ['except' => 'show']);
     Route::resource('setting/category', 'CategoryController', ['except' => 'show']);

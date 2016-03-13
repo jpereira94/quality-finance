@@ -104,29 +104,17 @@ class Transaction extends Model
 	{
 		$this->attributes['transaction_date'] = Carbon::createFromFormat('Y-m-d', $value);
 	}
-
-//	public function getTransactionDateAttribute($date)
-//	{
-//	    return $date;
-//	}
-
 	/**
 	 * Formats the payment_date field to be according ot carbon standards
 	 * @param $value
 	 */
 	public function setPaymentDateAttribute($value)
 	{
-	    $this->attributes['payment_date'] = Carbon::createFromFormat('Y-m-d', $value);
-	}
+		//only set the payment if the user set it, otherwise the app would crash
+		if($value)
+	        $this->attributes['payment_date'] = Carbon::createFromFormat('Y-m-d', $value);
 
-	/**
-	 * @param $date
-	 * @return mixed
-	 */
-//	public function getPaymentDateAttribute($date)
-//	{
-//		return $date;
-//	}
+	}
 
 	/**
 	 * Returns a formatted amount, i.e. if is expense then return a negative amount, otherwise return a positive number
@@ -151,5 +139,25 @@ class Transaction extends Model
 	public function getColorCodeAttribute($value)
 	{
 		return $this->is_expense ? 'blue-text text-accent-2' : 'green-text';
+	}
+
+	/**
+	 *  Returns only the transactions that are expenses
+	 * @param $query
+	 * @return mixed
+	 */
+	public function scopeExpenses($query)
+	{
+	    return $query->where('is_expense', '1');
+	}
+
+	/**
+	 * Returns only the transactions that are revenues
+	 * @param $query
+	 * @return mixed
+	 */
+	public function scopeRevenues($query)
+	{
+	    return $query->where('is_expense', '0');
 	}
 }

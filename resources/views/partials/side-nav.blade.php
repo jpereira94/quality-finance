@@ -2,10 +2,11 @@
 	<ul id="nav-mobile" class="nav-menu">
 
 		<li class="logo center-align white-text text-uppercase">
-			Quality Contabilidade
+			<span style="color: rgba(255, 255, 255, 0.45); font-size: 1.8rem; line-height: 1.1;">Quality</span>
+			<span style="display: block; font-size: 1.3rem">Contabilidade</span>
 		</li>
-		<li>
-			<a href="#!">Visão Geral</a>
+		<li class="{{ set_active('/') }}">
+			<a href="/">Visão Geral</a>
 		</li>
 		<li class="{{ set_active(action('TransactionController@index')) }}">
 			<a href="{{ action('TransactionController@index') }}">Transações</a>

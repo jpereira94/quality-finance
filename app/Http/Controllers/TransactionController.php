@@ -121,7 +121,7 @@ class TransactionController extends Controller
 
         //if the is_expense checkbox is unchecked then add it to the inputs field
         if(!isset($inputs['is_expense']))
-            $inputs['is_expense'] = 1;
+            $inputs['is_expense'] = 0;
 
         //finally, add the account to the database
         $transaction->update($inputs);
@@ -151,18 +151,6 @@ class TransactionController extends Controller
      */
     public function filterData()
     {
-//        dd('hello');
-        //check if its our form
-//        if ( Session::token() !== Input::get( '_token' ) ) {
-//            return Response::json(array(
-//                'success' => false,
-//                'errors'  => 'Unauthorized attempt to filter data!',
-//            ), 400);
-//            return Response::json( array(
-//                'status' => 'error',
-//                'msg' => 'Unauthorized attempt to create setting'
-//            ) );
-//        }
 
         $start = Input::get('start_date');
         $end = Input::get('end_date');

@@ -162,6 +162,9 @@ return [
         browner12\helpers\HelperServiceProvider::class,
 //        Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+
+//        "Khill\Lavacharts\Laravel\LavachartsServiceProvider"
 //        /*/*
 //         * PHPStorm IDE-helper
 //         */

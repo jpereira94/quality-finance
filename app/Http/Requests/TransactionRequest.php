@@ -24,14 +24,14 @@ class TransactionRequest extends Request
     public function rules()
     {
         return [
-//            'date'          => 'required',
-//            'date_submit'   => 'required|date',
             'transaction_date' => 'required',
             'transaction_date_submit' => 'required|date',
+            'payment_date_submit'   => 'date',
             'company_id'    => 'required|exists:companies,id',
             'category_id'   => 'required|exists:categories,id',
             'account_id'    => 'required|exists:accounts,id',
             'amount'        => 'required|min:0',
+            'tax'           => 'numeric',
         ];
     }
 }

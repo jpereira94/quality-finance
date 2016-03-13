@@ -8662,9 +8662,12 @@ body {
       .side-nav ul.nav-menu li.active a {
         color: #FFF !important; }
     .side-nav ul.nav-menu li.logo {
-      line-height: 80px; }
+      font-family: 'Oswald', sans-serif;
+      padding: 6.5px 15px; }
       .side-nav ul.nav-menu li.logo:hover, .side-nav ul.nav-menu li.logo:active {
         background-color: inherit; }
+      .side-nav ul.nav-menu li.logo span {
+        display: block; }
     .side-nav ul.nav-account {
       position: absolute;
       bottom: 0;
@@ -8709,7 +8712,8 @@ body {
 
 main {
   padding-left: 240px;
-  padding-top: 80px; }
+  padding-top: 80px;
+  min-height: calc(100% - 80px); }
 
 nav.top-nav {
   box-shadow: none;
@@ -8838,5 +8842,14 @@ textarea.materialize-textarea.valid ~ label {
   .pdf.bordered > tbody > tr > td,
   .pdf.bordered > tbody > tr > th {
     border: 1px solid #d0d0d0; }
+
+.alert {
+  position: fixed;
+  z-index: 999;
+  right: 0px;
+  left: 240px;
+  bottom: 0px;
+  padding: 5px 0px;
+  color: rgba(0, 0, 0, 0.75); }
 
 /*# sourceMappingURL=app.css.map */

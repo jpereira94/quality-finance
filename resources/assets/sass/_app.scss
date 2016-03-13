@@ -99,11 +99,16 @@ $side-nav-width: 240px;
 
       li.logo {
         @extend .text-uppercase;
-        line-height: $top-nav-height;
+        font-family: 'Oswald', sans-serif;
+        //line-height: $top-nav-height;
+        //height: $top-nav-height;
         //margin-bottom: 50px;
-        //padding: 0 15px;
+        padding: ($top-nav-height - 67px)/2 15px;
         &:hover, &:active {
           background-color: inherit;
+        }
+        span {
+          display: block;
         }
       }
     }
@@ -183,6 +188,8 @@ $side-nav-width: 240px;
 main {
   padding-left: $side-nav-width;
   padding-top: $top-nav-height;
+
+  min-height: calc(100% - 80px);
 }
 
 nav.top-nav {
@@ -359,4 +366,12 @@ input[type=submit]
 
 }
 
-
+.alert {
+  position: fixed;
+  z-index: 999;
+  right: 0px;
+  left: 240px;
+  bottom: 0px;
+  padding: 5px 0px;
+  color: rgba(0, 0, 0, 0.75);
+}
