@@ -34,13 +34,13 @@ $factory->define(\App\Company::class, function (\Faker\Generator $faker) {
 });
 
 $factory->define(\App\Transaction::class, function(\Faker\Generator $faker) {
-   return [
-       'transaction_date'   => $faker->dateTimeBetween('-1 years')->format('Y-m-d'),
-       'payment_date'       => $faker->dateTimeBetween('-1 years', '+2 months')->format('Y-m-d'),
-       'company_id'         => rand(1, 15),
-       'category_id'        => rand(1, 51),
-       'account_id'         => rand(1, 3),
-       'is_expense'         => $faker->boolean(),
-       'amount'             => $faker->randomFloat(2, 0, 10000),
-   ];
+    return [
+        'transaction_date'   => $faker->dateTimeBetween('-1 years')->format('Y-m-d'),
+        'payment_date'       => $faker->dateTimeBetween('-1 years', '+2 months')->format('Y-m-d'),
+        'company_id'         => rand(1, 15),
+        'category_id'        => rand(1, 51),
+        'account_id'         => rand(1, 3),
+        'is_expense'         => $faker->boolean(),
+        'amount'             => $faker->randomFloat(2, 0, 10000),
+    ];
 });

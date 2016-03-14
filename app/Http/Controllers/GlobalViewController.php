@@ -20,7 +20,7 @@ class GlobalViewController extends Controller
 		    'legend' => [
 			    'position' => 'none'
 		    ],
-		    'sliceVisibilityThreshold' => 0.05,
+		    'sliceVisibilityThreshold' => 0.005,
 		    'backgroundColor' => [
 			    'fill' => 'transparent'
 		    ],
@@ -29,8 +29,8 @@ class GlobalViewController extends Controller
 	    //handles the expenses chart
 	    $expenseChart = \Lava::DataTable();
 
-	    $expenseChart->addStringColumn('Categoria')
-		    ->addNumberColumn('Despesa');
+	    $expenseChart->addStringColumn('name')
+		    ->addNumberColumn('value');
 
 	    $today = Carbon::now();
 	    $dates = [
@@ -46,6 +46,22 @@ class GlobalViewController extends Controller
 			    $expense->sum('amount')
 		    ];
 	    }
+		$balances = array_reverse(array_sort($balances, function ($value) {
+			return $value[1];
+		}));
+
+		/*$max_number_slices = 8;
+		$temp = 0;
+		if(sizeof($balances) > $max_number_slices) {
+			for ($i = $max_number_slices; $i <= sizeof($balances); $i++) {
+				$temp += $balances[$i][1];
+				unset($balances[$i]);
+			}
+		}
+		$balances[] = [
+			'Outros',
+			$temp
+		];*/
 
 	    $expenseChart->addRows($balances);
 
@@ -68,13 +84,26 @@ class GlobalViewController extends Controller
 
 	    unset($balances);
 	    foreach($revenues as $category => $revenue) {
-		    $balances[] = [
-			    $category,
-			    $revenue->sum('amount')
-		    ];
+			$balances[] = [
+				$category,
+				$revenue->sum('amount')
+			];
 	    }
 
-//	    dd($balances);
+		$balances = array_reverse(array_sort($balances, function($value) {
+			return $value[1];
+		}));
+		/*$temp = 0;
+		if(sizeof($balances) > $max_number_slices) {
+			for ($i = $max_number_slices; $i <= sizeof($balances); $i++) {
+				$temp += $balances[$i][1];
+				unset($balances[$i]);
+			}
+		}
+		$balances[] = [
+			'Outros',
+			$temp
+		];*/
 
 	    $revenueChart->addRows($balances);
 
