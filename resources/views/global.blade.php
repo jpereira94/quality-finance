@@ -35,8 +35,8 @@
 				<h5>Despesas <span class="right tooltipped" data-position="right" data-delay="10" data-tooltip="No mês transato acumulou um total de despesas de {{ format_balance($previous_month_financial[1]) }}">{{ format_balance($current_month_financial[1]) }} <i class="{!! $arrow[1] !!}"></i></span></h5>
 				<p class="text-uppercase grey-text text-darken-3" style="margin-top: 0px; line-height: 37px">Saldo <span class="right" style="font-size: 1.64rem">{{ format_balance($current_month_financial[0]-$current_month_financial[1]) }} <i class="fa fa-caret-down fa-fw white-text">&nbsp;</i></span></p>
 			</div>
-			<div class="col s8" style="display: flex; flex-direction: column; background-color: rgb(238, 238, 238); border: 2px dashed rgb(117, 117, 117);">
-				<div class="valign-wrapper" style="height: 100%">
+			<div class="col s8" style="display: flex; flex-direction: column;">
+				<div class="valign-wrapper" style="height: 100%; background-color: rgb(238, 238, 238); border: 2px dashed rgb(117, 117, 117);">
 					<p class="flow-text valign center" style="width: 100%">Espaço para futura expansão. Sugestões são bem-vindas.</p>
 				</div>
 			</div>
