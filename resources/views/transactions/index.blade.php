@@ -78,7 +78,7 @@
             var table = $('#TransactionTable');
             //empty the table
             table.empty();
-            table.append('<tr><td> <div class="progress"><div class="indeterminate"></div></div></td></tr>')
+            table.append('<tr><td> <div class="progress"><div class="indeterminate"></div></div></td></tr>');
 
 
             //start the ajax request

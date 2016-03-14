@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', 'Visão Geral')
+@section('page-title', 'Visão Geral do Mês')
 
 @section('footer')
 	<footer class="page-footer">
@@ -30,7 +30,7 @@
 		</div>
 		<div class="row" style="display: flex">
 			<div class="col s4" style="display: flex; flex-direction: column">
-				<h3>Saldo do mês atual</h3>
+				<h3>Posição Financeira</h3>
 				<h5>Receitas <span class="right tooltipped" data-position="right" data-delay="10" data-tooltip="No mês transato acumulou um total de receitas de {{ format_balance($previous_month_financial[0]) }}">{{ format_balance($current_month_financial[0]) }} <i class="{!! $arrow[0] !!}"></i></span></h5>
 				<h5>Despesas <span class="right tooltipped" data-position="right" data-delay="10" data-tooltip="No mês transato acumulou um total de despesas de {{ format_balance($previous_month_financial[1]) }}">{{ format_balance($current_month_financial[1]) }} <i class="{!! $arrow[1] !!}"></i></span></h5>
 				<p class="text-uppercase grey-text text-darken-3" style="margin-top: 0px; line-height: 37px">Saldo <span class="right" style="font-size: 1.64rem">{{ format_balance($current_month_financial[0]-$current_month_financial[1]) }} <i class="fa fa-caret-down fa-fw white-text">&nbsp;</i></span></p>

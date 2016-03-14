@@ -32,7 +32,13 @@ class GlobalViewController extends Controller
 	    $expenseChart->addStringColumn('Categoria')
 		    ->addNumberColumn('Despesa');
 
-	    $expenses = Transaction::expenses()->with('category')->get()->groupBy('category.compound_name');
+	    $today = Carbon::now();
+	    $dates = [
+		    $today->startOfMonth()->toDateString(),
+		    $today->endOfMonth()->toDateString(),
+	    ];
+
+	    $expenses = Transaction::expenses()->whereBetween('transaction_date', $dates)->with('category')->get()->groupBy('category.compound_name');
 
 	    foreach($expenses as $category => $expense) {
 		    $balances[] = [
@@ -52,7 +58,13 @@ class GlobalViewController extends Controller
 	    $revenueChart->addStringColumn('Categoria')
 		    ->addNumberColumn('Receita');
 
-	    $revenues = Transaction::revenues()->with('category')->get()->groupBy('category.compound_name');
+	    $today = Carbon::now();
+	    $dates = [
+		    $today->startOfMonth()->toDateString(),
+		    $today->endOfMonth()->toDateString(),
+	    ];
+
+	    $revenues = Transaction::revenues()->whereBetween('transaction_date', $dates)->with('category')->get()->groupBy('category.compound_name');
 
 	    unset($balances);
 	    foreach($revenues as $category => $revenue) {
