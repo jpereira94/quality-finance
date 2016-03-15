@@ -49,7 +49,7 @@
 <footer class="page-footer">
 	<div class="footer-copyright">
 		<div class="container">
-			Sessão iniciada como {{ Auth::user()->name }}
+			{{--Sessão iniciada como {{ Auth::user()->name }}--}}
 			<a class="modal-trigger right  grey-text text-lighten-4" href="#generate-pdf" style="padding: 0 8px;">
 				{{--Logout --}}
 				<i class="fa fa-sign-out fa-2x fa-fw"></i>

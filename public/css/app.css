@@ -8637,9 +8637,14 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   .hidden-print {
     display: none !important; } }
 
-html,
 body {
-  height: 100%; }
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
 
 .text-uppercase, .side-nav ul.nav-menu li.logo {
   text-transform: uppercase; }
@@ -8713,7 +8718,9 @@ body {
 main {
   padding-left: 240px;
   padding-top: 80px;
-  min-height: calc(100% - 80px); }
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto; }
 
 nav.top-nav {
   box-shadow: none;
@@ -8821,11 +8828,7 @@ textarea.materialize-textarea.valid ~ label {
   width: 30%; }
 
 .page-footer {
-  padding-top: 0 !important;
-  position: relative;
-  left: 0;
-  bottom: 0;
-  right: 0; }
+  padding-top: 0 !important; }
   .page-footer .footer-copyright {
     padding-left: 240px; }
   .page-footer a.right i {

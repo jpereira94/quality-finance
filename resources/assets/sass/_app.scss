@@ -54,10 +54,17 @@
 
 //  Place here your app code
 
-html,
+html
+{
+  //height: 100%;
+}
 body {
-  height: 100%;
+
   //overflow: hidden;
+  //make footer sticky
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .text-uppercase {
@@ -189,7 +196,9 @@ main {
   padding-left: $side-nav-width;
   padding-top: $top-nav-height;
 
-  min-height: calc(100% - 80px);
+  //make footer sticky
+  flex: 1 0 auto;
+  //min-height: calc(100% - 80px);
 }
 
 nav.top-nav {
@@ -331,10 +340,10 @@ input[type=submit]
 
 .page-footer {
   padding-top: 0 !important;
-  position: relative;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  //position: relative;
+  //left: 0;
+  //bottom: 0;
+  //right: 0;
 
   .footer-copyright {
     padding-left: $side-nav-width;
