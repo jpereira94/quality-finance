@@ -26,17 +26,10 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-//    Route::controller('settings', 'Con')
-//    Route::resource('settings', 'ConfigurationController', ['only' => 'index']);
+Route::group(['middleware' => ['web', 'auth']], function () {
 
-    /*Route::get('/', function () {
-
-
-    });*/
     Route::get('/', 'GlobalViewController@index');
 
-//    Route::get('setting', 'ConfigurationController@index');
     Route::resource('setting/account', 'AccountController', ['except' => 'show']);
     Route::resource('setting/company', 'CompanyController', ['except' => 'show']);
     Route::resource('setting/category', 'CategoryController', ['except' => 'show']);
@@ -49,7 +42,10 @@ Route::group(['middleware' => ['web']], function () {
 
 //    Route::get('filter-debug', 'TransactionController@filterDataDebug');
 
+    Route::get('/home', 'HomeController@index');
+});
 
+Route::group(['middleware' => ['web']], function () {
     Route::auth();
 });
 

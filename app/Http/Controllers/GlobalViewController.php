@@ -12,9 +12,6 @@ class GlobalViewController extends Controller
 {
     public function index()
     {
-	    /*
-	     * TODO: ver possibilidade de eliminar slices para ter um numero maximo de slices e nao por percentagem...
-	     */
 
 	    $chartOptions = [
 		    'legend' => [

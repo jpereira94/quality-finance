@@ -8,7 +8,7 @@
             {!! Form::open(['id' => 'filter-data-form', 'url' => action('TransactionController@filterData')]) !!}
             <div class="modal-content">
                 <h4>Filtrar transações </h4>
-                <p></p>
+
                     <div class="row">
                         <div class="input-field col s12">
                             {!! Form::text('start_date', $dates['first'], ['placeholder' => 'AAAA-MM-DD', 'id' => 'start_date']) !!}
@@ -17,8 +17,6 @@
                         <div class="input-field col s12">
                             {!! Form::text('end_date', $dates['last'], ['placeholder' => 'AAAA-MM-DD', 'id' => 'end_date']) !!}
                             {!! Form::label('end_date', 'Data fim') !!}
-
-
                         </div>
                     </div>
             </div>
@@ -57,6 +55,57 @@
         </table>
     </div>
 @endsection
+
+
+@section('footer')
+
+    <!-- Modal Structure -->
+    <div id="generate-pdf" class="modal modal-sm modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Exportar PDF</h4>
+            <p>Escolha as opções para filtrar as transações de modo a exportar apenas as pretendidas.</p>
+            {!! Form::open(['url' => action('TransactionController@generatePDF'), 'method' => 'get']) !!}
+            <div class="row">
+                <div class="input-field col s6">
+                    {!! Form::text('start_date', $dates['first'], ['placeholder' => 'AAAA-MM-DD', 'id' => 'start_date']) !!}
+                    {!! Form::label('start_date', 'Data início') !!}
+                </div>
+                <div class="input-field col s6">
+                    {!! Form::text('end_date', $dates['last'], ['placeholder' => 'AAAA-MM-DD', 'id' => 'end_date']) !!}
+                    {!! Form::label('end_date', 'Data fim') !!}
+                </div>
+                <div class="input-field col s6">
+                    <select name="account">
+                        <option value="0" selected>Todas</option>
+                        @foreach(\App\Account::lists('name','id') as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    {!! Form::label('account', 'Conta') !!}
+                </div>
+                <div class="input-field col s6">
+                    {!! Form::select('show', [-1 => 'Todos', 1 => 'Despesas', 0 => 'Receitas']) !!}
+                    {!! Form::label('show', 'Mostrar') !!}
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer" style="padding: 4px 24px;">
+            <a href="#!" class="left modal-action modal-close waves-effect btn-flat">Cancelar</a>
+            {!! Form::submit('Exportar', ['class' => 'modal-action btn light-blue accent-3']) !!}
+        </div>
+        {!! Form::close() !!}
+    </div>
+
+
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large light-blue accent-4 modal-trigger z-depth-4" href="#generate-pdf">
+            <i class="large material-icons">save</i>
+        </a>
+    </div>
+
+@endsection
+
 
 @section('js')
     <script>

@@ -20,9 +20,15 @@
 </head>
 <body>
 
+
+@if(Request::is('*/create') || Request::is('*/edit') )
 <div class="alert orange center-align">
 	Para submeter formulários deve carregar obrigatoriamente no <strong>texto</strong> Criar ou Editar.
+	<button type="button" class="right btn-flat orange waves-effect waves-light close">
+		<i class="mdi-navigation-close"></i>
+	</button>
 </div>
+@endif
 
 @include('partials.side-nav')
 
@@ -38,6 +44,20 @@
 	</nav>
 	@yield('content')
 </main>
+
+
+<footer class="page-footer">
+	<div class="footer-copyright">
+		<div class="container">
+			Sessão iniciada como {{ Auth::user()->name }}
+			<a class="modal-trigger right  grey-text text-lighten-4" href="#generate-pdf" style="padding: 0 8px;">
+				{{--Logout --}}
+				<i class="fa fa-sign-out fa-2x fa-fw"></i>
+				{{--Sair--}}
+			</a>
+		</div>
+	</div>
+</footer>
 
 @yield('footer')
 
@@ -84,6 +104,10 @@
 		// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
 		$('.modal-trigger').leanModal();
 		$('select').material_select();
+	});
+
+	$('.alert .close').click(function() {
+		$(this).parent('.alert').slideUp();
 	});
 
 </script>

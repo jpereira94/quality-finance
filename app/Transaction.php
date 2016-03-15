@@ -113,7 +113,16 @@ class Transaction extends Model
 		//only set the payment if the user set it, otherwise the app would crash
 		if($value)
 	        $this->attributes['payment_date'] = Carbon::createFromFormat('Y-m-d', $value);
+	}
 
+	/**
+	 * Returns the formatted amount
+	 * @param $value
+	 * @return float
+	 */
+	public function getFormattedAmountAttribute($value)
+	{
+		return $this->is_expense ? $this->amount * -1 : $this->amount;
 	}
 
 	/**
@@ -160,4 +169,6 @@ class Transaction extends Model
 	{
 	    return $query->where('is_expense', '0');
 	}
+
+
 }

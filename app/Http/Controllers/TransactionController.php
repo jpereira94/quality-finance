@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\Http\Requests\TransactionRequest;
 use App\Transaction;
 use Carbon\Carbon;
@@ -15,6 +16,15 @@ use Session;
 
 class TransactionController extends Controller
 {
+    /**
+     * TransactionController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -192,7 +202,6 @@ class TransactionController extends Controller
             $balances[$date] = format_balance($transaction_grouped->sum(function ($transaction){return $transaction['amount']*pow(-1,$transaction['is_expense']);}));
         }
 
-
         $response = array(
             'start'         => $start,
             'end'           => $end,
@@ -211,15 +220,65 @@ class TransactionController extends Controller
      */
     public function generatePDF()
     {
+        /*
+         * group by
+         * if 0 then doesnt group, i.e., returns ordered by date
+         */
 
-//        dd(Input::get('start_date'));
-        dd(Input::all());
+        $filtering = Input::all();
 
-        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get();
 
-//        dd($transactions);
+        //handles exception when the start_date has not been defined
+        if(!isset($filtering['start_date']) ) {
+            $filtering['start_date'] = Transaction::orderBy('transaction_date')->select('transaction_date')->get()->first()->transaction_date->toDateString();
+        }
+        //handles exception when the end_date has not been defined
+        if(!isset($filtering['end_date']) ) {
+            $filtering['end_date'] = Transaction::orderBy('transaction_date')->select('transaction_date')->get()->last()->transaction_date->toDateString();
+        }
+        //handles exception when the account has not been defined
+        if(!isset($filtering['account'])) {
+            $filtering['account'] = 0;
+        }
+        //handles exception when the show option has not been defined
+        if(!isset($filtering['show'])) {
+            $filtering['show'] = -1;
+        }
 
-//        return view('transactions.transactions', compact('transactions'));
-        return \PDF::loadView('transactions.transactions', compact('transactions'))->inline();
+
+
+        $transactions = Transaction::latest('transaction_date')
+                        ->with('Account','Company','Category')
+                        ->whereBetween('transaction_date',[$filtering['start_date'], $filtering['end_date']]);
+
+        if($filtering['account']) {
+            $transactions = $transactions->where('account_id', $filtering['account']);
+            $filtering['account'] = Account::find($filtering['account'])->name;
+        }
+        else
+        {
+            $filtering['account'] = 'Todas';
+        }
+
+
+        if($filtering['show'] != -1)
+        {
+            $transactions = $transactions->where('is_expense', $filtering['show']);
+            $filtering['show'] = ($filtering['show']) ? 'Despesas' : 'Receitas';
+        }
+        else
+        {
+            $filtering['show'] = 'Todas';
+        }
+
+        $transactions = $transactions->get();
+//        dump($transactions->first()->formatted_amount);
+//        dd($transactions->sum('formatted_amount'));
+
+//        dd($filtering);
+
+//        return view('transactions.transactions', compact('transactions', 'filtering'));
+        return \PDF::loadView('transactions.transactions', compact('transactions', 'filtering'))
+                ->inline();
     }
 }
