@@ -26,8 +26,7 @@
     <footer class="page-footer">
         <div class="footer-copyright">
             <div class="container">
-
-                <a class="grey-text text-lighten-4 right" href="#!">
+                <a class="grey-text text-lighten-4 right" href="{{ action('TransactionController@generatePDF') }}">
                     <i class="material-icons">save</i>
                 </a>
             </div>

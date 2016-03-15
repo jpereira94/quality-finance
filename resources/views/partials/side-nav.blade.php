@@ -11,6 +11,9 @@
 		<li class="{{ set_active(action('TransactionController@index')) }}">
 			<a href="{{ action('TransactionController@index') }}">Transações</a>
 		</li>
+		<li>
+			<a href="#">Relatórios</a>
+		</li>
 
 		<li class="no-padding {{ set_active([action('AccountController@index'), action('CompanyController@index'), action('CategoryController@index')]) }}">
 			<ul class="collapsible collapsible-accordion">

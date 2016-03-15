@@ -209,14 +209,17 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-//    public function generatePDF()
-//    {
-//
-//        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get();
-//
-////        dd($transactions);
-//
-////        return view('transactions.transactions', compact('transactions'));
-//        return \PDF::loadView('transactions.transactions', compact('transactions'))->inline();
-//    }
+    public function generatePDF()
+    {
+
+//        dd(Input::get('start_date'));
+        dd(Input::all());
+
+        $transactions = Transaction::latest('transaction_date')->with('Account','Company','Category')->get();
+
+//        dd($transactions);
+
+//        return view('transactions.transactions', compact('transactions'));
+        return \PDF::loadView('transactions.transactions', compact('transactions'))->inline();
+    }
 }

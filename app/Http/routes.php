@@ -41,10 +41,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('setting/company', 'CompanyController', ['except' => 'show']);
     Route::resource('setting/category', 'CategoryController', ['except' => 'show']);
 
-//    Route::get('transaction/pdf', 'TransactionController@generatePDF');
-
+    Route::get('transaction/pdf', 'TransactionController@generatePDF');
     Route::resource('transaction', 'TransactionController');
     Route::post('transaction/filter', 'TransactionController@filterData');
+
+    Route::get('report', 'ReportsController@index');
 
 //    Route::get('filter-debug', 'TransactionController@filterDataDebug');
 

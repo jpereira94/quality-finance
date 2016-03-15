@@ -9,9 +9,18 @@
 
 
 
+
     <!-- Styles -->
     {{--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <style>
+        table, tr, td, th, tbody, thead, tfoot {
+            page-break-inside: avoid !important;
+        }
+        table {
+            table-layout:fixed;
+        }
+    </style>
     <style>
         html {
             font-size: 10px;

@@ -2,7 +2,7 @@
 
 @section('page-title', 'Visão Geral do Mês')
 
-@section('footer')
+{{--@section('footer')
 	<footer class="page-footer">
 		<div class="footer-copyright">
 			<div class="container">
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 	</footer>
-@endsection
+@endsection--}}
 
 
 @section('content')
