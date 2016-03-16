@@ -25,11 +25,11 @@
         }
 
         .form-signin {
-            max-width: 400px;
+            width: 482px;
             padding: 15px;
             margin: 0 auto;
         }
-        .form-signin .form-signin-heading,
+        /*.form-signin .form-signin-heading,
         .form-signin .checkbox {
             margin-bottom: 10px;
         }
@@ -57,38 +57,35 @@
             margin-bottom: 10px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
-        }
+        }*/
     </style>
 </head>
 <body>
 
-<div class="container">
-
-    <div class="form-signin">
-        <p class="logo center-align text-uppercase">
-            <span style="color: #919A9E; font-size: 4rem; line-height: 1.1;">Quality</span>
-            <span style="display: block; font-size: 2.8rem; color: #37474f">Contabilidade</span>
+    <div class="form-signin-header blue-grey darken-3" style="height: 270px; margin-top: -40px"></div>
+    <div class="form-signin" style="margin-top: -230px">
+        <p class="logo center-align white-text text-uppercase">
+            <span style="color: rgba(255, 255, 255, 0.45); font-size: 4rem; line-height: 1.1;">Quality</span>
+            <span style="display: block; font-size: 2.8rem">Contabilidade</span>
         </p>
         <!--<h2 class="form-signin-heading">Efetue o login</h2>-->
 
         @include('partials.errors')
 
-        {!! Form::open(['method' => 'POST', 'url' => url('/login')]) !!}
+        {!! Form::open(['method' => 'POST', 'url' => url('/login'), 'style' => 'background-color:#FFF; padding: 44px 65px', 'class' => 'z-depth-1-half']) !!}
 
-        <div class="row">
-            <div class="input-field col s12" style="padding-bottom: 20px">
-                {!! Form::text('username', old('username')) !!}
-                {!! Form::label('username', 'Utilizador') !!}
-            </div>
-
-            <div class="input-field col s12" style="padding-bottom: 20px">
-                {!! Form::password('password') !!}
-                {!! Form::label('password', 'Password') !!}
-            </div>
-            <div class="col s12">
-                {!! Form::submit('Entrar', ['class' => 'btn']) !!}
-            </div>
+        <p style="font-weight: 700; font-size: 18px; margin: 0px 0px 20px;">Entrar</p>
+        <div class="input-field" style="margin:0 0 20px">
+            {!! Form::text('username', old('username')) !!}
+            {!! Form::label('username', 'Utilizador', ['style' => 'left: 0']) !!}
         </div>
+
+        <div class="input-field" style="margin:0 0 20px">
+            {!! Form::password('password') !!}
+            {!! Form::label('password', 'Password', ['style' => 'left: 0']) !!}
+        </div>
+
+        {!! Form::submit('Entrar', ['class' => 'btn']) !!}
 
         {!! Form::close() !!}
 
@@ -157,7 +154,6 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>--}}
     </div>
-</div>
 
 {{--<footer class="page-footer">
 	<div class="footer-copyright">
