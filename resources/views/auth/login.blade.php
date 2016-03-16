@@ -74,7 +74,7 @@
 
         {!! Form::open(['method' => 'POST', 'url' => url('/login'), 'style' => 'background-color:#FFF; padding: 44px 65px', 'class' => 'z-depth-1-half']) !!}
 
-        <p style="font-weight: 700; font-size: 18px; margin: 0px 0px 20px;">Entrar</p>
+        <p style="font-weight: 700; font-size: 18px; margin: 0 0 20px;">Entrar <a hr</p>
         <div class="input-field" style="margin:0 0 20px">
             {!! Form::text('username', old('username')) !!}
             {!! Form::label('username', 'Utilizador', ['style' => 'left: 0']) !!}
