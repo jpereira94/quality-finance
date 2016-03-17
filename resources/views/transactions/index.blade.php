@@ -35,30 +35,12 @@
                     </div>
                 </td>
             </tr>
-            {{--@foreach($transactions as $date => $transaction_grouped)
-                <tr class="card-panel transaction-title">
-                    <td colspan="4" style="padding: 10px 15px;">
-                        <span>{{ \Carbon\Carbon::createFromFormat('m-Y', $date)->formatLocalized('%B %Y') }}</span>
-                        <span class="right">{{ format_balance($transaction_grouped->sum(function ($transaction){return $transaction['amount']*pow(-1,$transaction['is_expense']);})) }}</span>
-                    </td>
-                </tr>
-
-                @foreach($transaction_grouped as $transaction)
-                    <tr data-action="{{ action('TransactionController@edit', $transaction) }}">
-                        <td>{{ $transaction->Category->compound_name }}</td>
-                        <td>{{ $transaction->Company->name }}</td>
-                        <td>{{ $transaction->Account->name }}</td>
-                        <td class="right-align {{ $transaction->color_code }}"> {{ format_balance($transaction->FormattedAmount()) }}</td>
-                    </tr>
-                @endforeach
-            @endforeach--}}
         </table>
     </div>
 @endsection
 
 
 @section('footer')
-
     <!-- Modal Structure -->
     <div id="generate-pdf" class="modal modal-sm modal-fixed-footer">
         <div class="modal-content">
@@ -96,14 +78,6 @@
         </div>
         {!! Form::close() !!}
     </div>
-
-
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a class="btn-floating btn-large light-blue accent-4 modal-trigger z-depth-4" href="#generate-pdf">
-            <i class="large material-icons">save</i>
-        </a>
-    </div>
-
 @endsection
 
 

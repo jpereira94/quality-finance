@@ -37,33 +37,22 @@ class GlobalViewController extends Controller
 
 	    $expenses = Transaction::expenses()->whereBetween('transaction_date', $dates)->with('category')->get()->groupBy('category.compound_name');
 
-	    foreach($expenses as $category => $expense) {
-		    $balances[] = [
-			    $category,
-			    $expense->sum('amount')
-		    ];
-	    }
-		$balances = array_reverse(array_sort($balances, function ($value) {
-			return $value[1];
-		}));
-
-		/*$max_number_slices = 8;
-		$temp = 0;
-		if(sizeof($balances) > $max_number_slices) {
-			for ($i = $max_number_slices; $i <= sizeof($balances); $i++) {
-				$temp += $balances[$i][1];
-				unset($balances[$i]);
+		if($expenses->count()) {
+			foreach ($expenses as $category => $expense) {
+				$balances[] = [
+					$category,
+					$expense->sum('amount')
+				];
 			}
-		}
-		$balances[] = [
-			'Outros',
-			$temp
-		];*/
+			$balances = array_reverse(array_sort($balances, function ($value) {
+				return $value[1];
+			}));
 
-	    $expenseChart->addRows($balances);
+			$expenseChart->addRows($balances);
+		}
+
 
 	    \Lava::DonutChart('expense', $expenseChart, $chartOptions);
-
 
 	    //handles the revenues chart
 	    $revenueChart = \Lava::DataTable();
@@ -80,33 +69,21 @@ class GlobalViewController extends Controller
 	    $revenues = Transaction::revenues()->whereBetween('transaction_date', $dates)->with('category')->get()->groupBy('category.compound_name');
 
 	    unset($balances);
-	    foreach($revenues as $category => $revenue) {
-			$balances[] = [
-				$category,
-				$revenue->sum('amount')
-			];
-	    }
-
-		$balances = array_reverse(array_sort($balances, function($value) {
-			return $value[1];
-		}));
-		/*$temp = 0;
-		if(sizeof($balances) > $max_number_slices) {
-			for ($i = $max_number_slices; $i <= sizeof($balances); $i++) {
-				$temp += $balances[$i][1];
-				unset($balances[$i]);
+		if($revenues->count()) {
+			foreach ($revenues as $category => $revenue) {
+				$balances[] = [
+					$category,
+					$revenue->sum('amount')
+				];
 			}
+			$balances = array_reverse(array_sort($balances, function ($value) {
+				return $value[1];
+			}));
+			$revenueChart->addRows($balances);
 		}
-		$balances[] = [
-			'Outros',
-			$temp
-		];*/
 
-	    $revenueChart->addRows($balances);
 
 	    \Lava::DonutChart('revenue', $revenueChart, $chartOptions);
-
-
 
 		$today = Carbon::now();
 	    $dates = [

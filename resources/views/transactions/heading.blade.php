@@ -6,8 +6,13 @@
     <ul class="right">
         @if(Request::is('transaction'))
             <li>
-                <a href="#filter-modal" class="modal-trigger">
+                <a class="modal-trigger" href="#filter-modal">
                     <i class="fa fa-filter fa-2x"></i>
+                </a>
+            </li>
+            <li>
+                <a class="modal-trigger"  href="#generate-pdf">
+                    <i class="material-icons">save</i>
                 </a>
             </li>
         @endif

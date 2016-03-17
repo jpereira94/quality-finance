@@ -12,7 +12,7 @@
 			<a href="{{ action('TransactionController@index') }}">Transações</a>
 		</li>
 		<li>
-			<a href="#">Relatórios</a>
+			<a href="{{ action('ReportsController@index') }}">Relatórios</a>
 		</li>
 
 		<li class="no-padding {{ set_active([action('AccountController@index'), action('CompanyController@index'), action('CategoryController@index')]) }}">

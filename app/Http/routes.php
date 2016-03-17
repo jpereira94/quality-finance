@@ -39,10 +39,10 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('transaction/filter', 'TransactionController@filterData');
 
     Route::get('report', 'ReportsController@index');
+    Route::get('report/raw', 'ReportsController@rawRequest');
+    Route::post('report/raw', 'ReportsController@rawGet');
 
-//    Route::get('filter-debug', 'TransactionController@filterDataDebug');
 
-    Route::get('/home', 'HomeController@index');
 });
 
 Route::group(['middleware' => ['web']], function () {

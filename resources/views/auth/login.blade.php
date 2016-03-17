@@ -70,11 +70,15 @@
         </p>
         <!--<h2 class="form-signin-heading">Efetue o login</h2>-->
 
-        @include('partials.errors')
 
-        {!! Form::open(['method' => 'POST', 'url' => url('/login'), 'style' => 'background-color:#FFF; padding: 44px 65px', 'class' => 'z-depth-1-half']) !!}
 
-        <p style="font-weight: 700; font-size: 18px; margin: 0 0 20px;">Entrar <a hr</p>
+        {!! Form::open(['id' => 'login-form', 'method' => 'POST', 'url' => url('/login'), 'style' => 'background-color:#FFF; padding: 44px 65px', 'class' => 'z-depth-2']) !!}
+
+        <p style="font-weight: 700; font-size: 1.5rem; margin: 0 0 40px;" class="text-uppercase">
+            Entrar
+            <a href="#!" onclick="$('#login-form').submit()" class="right text-uppercase" style="font-size: 15px; font-weight: normal; line-height: 2.25; color: rgba(0, 0, 0, 0.54);">Seguinte <i class="mdi-navigation-chevron-right mdi-lg"></i></a>
+        </p>
+
         <div class="input-field" style="margin:0 0 20px">
             {!! Form::text('username', old('username')) !!}
             {!! Form::label('username', 'Utilizador', ['style' => 'left: 0']) !!}
@@ -85,9 +89,19 @@
             {!! Form::label('password', 'Password', ['style' => 'left: 0']) !!}
         </div>
 
-        {!! Form::submit('Entrar', ['class' => 'btn']) !!}
+        {{--{!! Form::submit('Entrar', ['class' => 'btn']) !!}--}}
 
         {!! Form::close() !!}
+
+        @if (count($errors) > 0)
+            <div class="card-panel red white-text z-depth-2" style="margin-top: 25px">
+                <ul class="no-margin">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
 
         {{--<form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
